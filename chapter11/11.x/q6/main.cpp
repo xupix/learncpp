@@ -6,13 +6,13 @@
   i also made some printing to show the hand after each play
 */
 
+#include "clearCin.h"
 #include <iostream>
 #include <array>
 #include <algorithm>
 #include <chrono>
 #include <random>
 #include <cassert>
-#include "clearCin.h"
 
 enum class CardRank
 {
@@ -32,13 +32,13 @@ enum class CardRank
   max_rank,
 };
 
-enum class Suite
+enum class Suit
 {
   club,
   diamond,
   heart,
   spade,
-  max_suite,
+  max_suit,
 };
 
 enum class GameState
@@ -51,7 +51,7 @@ enum class GameState
 struct Card
 {
   CardRank rank{};
-  Suite suite{};
+  Suit suit{};
 };
 
 struct Player
@@ -88,12 +88,7 @@ int main()
 {
   Deck deck { createDeck() };
 
-  // print original deck
-  // printDeck(deck);
-
   shuffleDeck(deck);
-  //print shuffled deck
-  // printDeck(deck);
 
   announceWinner(playBlackjack(deck));
 
@@ -102,37 +97,69 @@ int main()
 
 void printCard(const Card& card)
 {
-  using enum CardRank;
   switch(card.rank)
   {
-    case rank_2:      std::cout << 2;   break;
-    case rank_3:      std::cout << 3;   break;
-    case rank_4:      std::cout << 4;   break;
-    case rank_5:      std::cout << 5;   break;
-    case rank_6:      std::cout << 6;   break;
-    case rank_7:      std::cout << 7;   break;
-    case rank_8:      std::cout << 8;   break;
-    case rank_9:      std::cout << 9;   break;
-    case rank_10:     std::cout << 10;  break;
-    case rank_jack:   std::cout << 'J'; break;
-    case rank_queen:  std::cout << 'Q'; break;
-    case rank_king:   std::cout << 'K'; break;
-    case rank_ace:    std::cout << 'A'; break;
-    default:
-      std::cout << "???";
-      break;
+  case CardRank::rank_2:
+    std::cout << 2;
+    break;
+  case CardRank::rank_3:
+    std::cout << 3;
+    break;
+  case CardRank::rank_4:
+    std::cout << 4;
+    break;
+  case CardRank::rank_5:
+    std::cout << 5;
+    break;
+  case CardRank::rank_6:
+    std::cout << 6;
+    break;
+  case CardRank::rank_7:
+    std::cout << 7;
+    break;
+  case CardRank::rank_8:
+    std::cout << 8;
+    break;
+  case CardRank::rank_9:
+    std::cout << 9;
+    break;
+  case CardRank::rank_10:
+    std::cout << 10;
+    break;
+  case CardRank::rank_jack:
+    std::cout << 'J';
+    break;
+  case CardRank::rank_queen:
+    std::cout << 'Q';
+    break;
+  case CardRank::rank_king:
+    std::cout << 'K';
+    break;
+  case CardRank::rank_ace:
+    std::cout << 'A';
+    break;
+  default:
+    std::cout << "???";
+    break;
   }
 
-  using enum Suite;
-  switch (card.suite)
+  switch (card.suit)
   {
-    case club:     std::cout << 'C'; return;
-    case diamond:  std::cout << 'D'; return;
-    case heart:    std::cout << 'H'; return;
-    case spade:    std::cout << 'S'; return;
-    default:
-      std::cout << "???";
-      break;
+  case Suit::club:
+    std::cout << 'C';
+    return;
+  case Suit::diamond:
+    std::cout << 'D';
+    return;
+  case Suit::heart:
+    std::cout << 'H';
+    return;
+  case Suit::spade:
+    std::cout << 'S';
+    return;
+  default:
+    std::cout << "???";
+    break;
   }
 }
 
@@ -140,11 +167,11 @@ Deck createDeck()
 {
   Deck deck(deckSize);
   int cardIndex{ 0 };
-  for (int i{ 0 }; i < static_cast<int>(Suite::max_suite); ++i)
+  for (int i{0}; i < static_cast<int>(Suit::max_suit); ++i)
   {
     for (int j { 0 }; j < static_cast<int>(CardRank::max_rank); ++j)
     {
-      deck[cardIndex].suite = static_cast<Suite>(i);
+      deck[cardIndex].suit = static_cast<Suit>(i);
       deck[cardIndex].rank = static_cast<CardRank>(j);
       ++cardIndex;
     }
@@ -171,26 +198,34 @@ void shuffleDeck(Deck& deck)
 
 int getCardValue(const Card& card)
 {
-  using enum CardRank;
-
   switch(card.rank)
   {
-    case rank_2:      return 2;
-    case rank_3:      return 3;
-    case rank_4:      return 4;
-    case rank_5:      return 5;
-    case rank_6:      return 6;
-    case rank_7:      return 7;
-    case rank_8:      return 8;
-    case rank_9:      return 9;
-    case rank_10:
-    case rank_jack:
-    case rank_queen:
-    case rank_king:   return 10;
-    case rank_ace:    return 11;
-    default:
-      assert(false && "should never happen");
-      return 0;
+  case CardRank::rank_2:
+    return 2;
+  case CardRank::rank_3:
+    return 3;
+  case CardRank::rank_4:
+    return 4;
+  case CardRank::rank_5:
+    return 5;
+  case CardRank::rank_6:
+    return 6;
+  case CardRank::rank_7:
+    return 7;
+  case CardRank::rank_8:
+    return 8;
+  case CardRank::rank_9:
+    return 9;
+  case CardRank::rank_10:
+  case CardRank::rank_jack:
+  case CardRank::rank_queen:
+  case CardRank::rank_king:
+    return 10;
+  case CardRank::rank_ace:
+    return 11;
+  default:
+    assert(false && "should never happen");
+    return 0;
   }
 }
 
@@ -284,19 +319,20 @@ GameState decideWinner(const Player& player, const Player& dealer)
 
 void announceWinner(const GameState gameState)
 {
-  using enum GameState;
-
   switch(gameState)
   {
-    case win:  std::cout << "Player won!!\n"; 
-      return;
-    case lose: std::cout << "Dealer won. Better luck next time!\n";
-      return;
-    case tie:  std::cout << "It's a tie. No one won. Better luck next time.\n";
-      return;
-    default:
-      assert(false && "should never happen");
-      return;
+  case GameState::win:
+    std::cout << "Player won!!\n";
+    return;
+  case GameState::lose:
+    std::cout << "Dealer won. Better luck next time!\n";
+    return;
+  case GameState::tie:
+    std::cout << "It's a tie. No one won. Better luck next time.\n";
+    return;
+  default:
+    assert(false && "should never happen");
+    return;
   }
 }
 
