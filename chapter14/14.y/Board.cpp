@@ -35,13 +35,13 @@ void Board::swap(Point emptyP, Point adjacentP)
   std::swap(m_board[emptyP.getX()][emptyP.getY()], m_board[adjacentP.getX()][adjacentP.getY()]);
 }
 
-bool Board::isValidPosition(Point p)
+bool Board::isValidPosition(Point &p)
 {
   return (p.getX() < SIZE && p.getX() >= 0) &&
          (p.getY() < SIZE && p.getY() >= 0);
 }
 
-bool Board::moveTile(Direction direction)
+bool Board::moveTile(const Direction &direction)
 {
   Point emptyP{findEmptyTile()};
   Point adjacentP{emptyP.getAdjacentPoint(-direction)};
@@ -76,7 +76,7 @@ static void printEmptyLines(int num)
     std::cout << '\n';
 }
 
-bool operator==(Board b1, Board b2)
+bool operator==(const Board &b1, const Board &b2)
 {
   for (int x{0}; x < Board::SIZE; ++x)
     for (int y{0}; y < Board::SIZE; ++y)

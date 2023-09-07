@@ -18,11 +18,11 @@ class Board
 public:
   Board();
   auto operator[](int index) const;
-  bool moveTile(Direction direction);
+  bool moveTile(const Direction &direction);
   bool isWon();
   void initialize();
   static void printEmptyLines(int num);
-  friend bool operator==(Board b1, Board b2);
+  friend bool operator==(const Board &b1, const Board &b2);
   friend std::ostream &operator<<(std::ostream &ostr, Board board);
 
 private:
@@ -31,7 +31,7 @@ private:
 
   Point findEmptyTile();
   void swap(Point emptyP, Point adjacentP);
-  bool isValidPosition(Point p);
+  bool isValidPosition(Point &p);
 };
 
 #endif
