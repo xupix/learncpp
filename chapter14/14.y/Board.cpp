@@ -22,15 +22,9 @@ auto Board::operator[](int index) const
 Point Board::findEmptyTile()
 {
   for (int x{0}; x < SIZE; ++x)
-  {
     for (int y{0}; y < SIZE; ++y)
-    {
       if (m_board[x][y].isEmpty())
-      {
         return Point{x, y};
-      }
-    }
-  }
 
   assert(0 && "No empty tile");
   return Point{-1, -1};
@@ -79,9 +73,7 @@ void Board::initialize()
 static void printEmptyLines(int num)
 {
   for (int i{0}; i < num; ++i)
-  {
     std::cout << '\n';
-  }
 }
 
 bool operator==(Board b1, Board b2)
