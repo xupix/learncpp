@@ -13,3 +13,7 @@ Some are more in depth and better formatted and such.
 
 Lastly, the more interesting exercises are from chapter7 -> 7.x
 and on where things get a bit more interesting and the topics are more interesting.
+
+*Note*: As I was nearing the end of the tutorial, there was a major update.
+I updated the chapters and moved them around but there might be some minor
+differences in some of the quizzes.
